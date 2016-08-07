@@ -6,10 +6,24 @@
 //  Copyright © 2015 Dali Labs, Inc. All rights reserved.
 //
 
+
 import UIKit
 
-class TabBarControllerViewController: UITabBarController {
+var showOrNot : Bool = false
 
+
+class TabBarControllerViewController: UITabBarController, UITabBarControllerDelegate {
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
+    override func viewWillAppear(animated: Bool) {
+        let vc = appDelegate.walkthrough!
+        let icon = UITabBarItem(title: "News", image: UIImage(imageLiteral: "newsTab"), selectedImage: nil)
+        vc.tabBarItem = icon
+        self.viewControllers?.append(vc)
+
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,8 +34,16 @@ class TabBarControllerViewController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
+    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+        
+    }
+
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+ 
+        return true
+    }
     /*
     // MARK: - Navigation
 
