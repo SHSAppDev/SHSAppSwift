@@ -12,7 +12,6 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBOutlet weak var segmentBarRedOrBlue: UISegmentedControl!
-    @IBOutlet weak var segmentBarDays: UISegmentedControl!
     @IBOutlet weak var timeBar: UILabel!
     @IBOutlet weak var timeBarLabel: UILabel!
     @IBOutlet weak var segmentBar: UILabel!
@@ -20,7 +19,6 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var cell: PeriodTimesCell!
     var timesArray: [String]! = []
-    var actualTimes: [String]! = []
     var inPeriod = false
     var periodArray: [String]! = []
     var currTime = 0
@@ -47,8 +45,7 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var counter: Float = 0
 
     var redDay: Bool = true
-    var redWeek: Bool = true
-    
+
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidLoad()
@@ -83,79 +80,7 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dayOfWeek = getDayOfWeek(currDate)
         currTableView = dayOfWeek
 
-        if(dayOfWeek == 2){
-            segmentBarDays.selectedSegmentIndex = 0
-        }
-        else if(dayOfWeek == 3){
-            segmentBarDays.selectedSegmentIndex = 1
-        }
-        else if(dayOfWeek == 4){
-            segmentBarDays.selectedSegmentIndex = 2
-        }
-        else if(dayOfWeek == 5){
-            segmentBarDays.selectedSegmentIndex = 3
-        }
-        else if(dayOfWeek == 6){
-            segmentBarDays.selectedSegmentIndex = 4
-        }
-        else {
-            segmentBarDays.selectedSegmentIndex = 0
-        }
-
-        if(segmentBarDays.selectedSegmentIndex+1 % 2 == 0){
-            if(self.segmentBarRedOrBlue.selectedSegmentIndex == 0){
-                self.redWeek = false
-            }
-            else{
-                self.redWeek = true
-            }
-        }else{
-            if(self.segmentBarRedOrBlue.selectedSegmentIndex == 0){
-                self.redWeek = true
-            }
-            else{
-                self.redWeek = false
-            }
-        }
-
-        if(dayOfWeek > 6){
-            if(redDay){
-                setTableView("R")
-            }
-            else{
-                setTableView("B")
-            }
-        }
-        else{
-            if((dayOfWeek-1) % 2 == 0){
-                if(redWeek){
-                    actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                        "12:00 - 12:35", "12:40 - 2:10"]
-                    setTableView("B")
-                    self.redDay = false
-                }
-                else{
-                    actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                        "12:00 - 12:35", "12:40 - 2:10", "2:15 - 3:45"]
-                    setTableView("R")
-                    self.redDay = true
-                }
-            }
-            else{
-                if(redWeek){
-                    actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                        "12:00 - 12:35", "12:40 - 2:10", "2:15 - 3:45"]
-                    setTableView("R")
-                    self.redDay = true
-                }
-                else{
-                    actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                        "12:00 - 12:35", "12:40 - 2:10"]
-                    setTableView("B")
-                    self.redDay = false
-                }
-            }
-        }
+        self.setTableView("R")
 
         
         tempHour = components.hour
@@ -193,12 +118,12 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         totalCurrMinutes = hour*60 + minutes
         
         var timeLeftInPeriod: Int
-        if(actualTimes.count == 0){
+        if(timesArray.count == 0){
             timeBarLabel.text = "School's Out!"
         }
 
         else if(self.redDay){
-            for(var i=0; i<actualTimes.count*2; i=i+2){
+            for(var i=0; i<timesArray.count*2; i=i+2){
                 if(totalCurrMinutes >= RedMinutesTotal[i] && totalCurrMinutes < RedMinutesTotal[i+1]){
                     inPeriod = true
                     if(i<=1){
@@ -251,7 +176,7 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         else if(self.redDay == false){
-            for(var i=0; i<actualTimes.count*2; i=i+2){
+            for(var i=0; i<timesArray.count*2; i=i+2){
                 if(totalCurrMinutes >= BlueMinutesTotal[i] && totalCurrMinutes < BlueMinutesTotal[i+1]){
                     inPeriod = true
                     if(i<=1){
@@ -313,50 +238,26 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let weekDay = myComponents.weekday
         return weekDay
     }
-    
-    @IBAction func daySelected(sender: AnyObject) {
-        self.findTypeDay(sender.selectedSegmentIndex+1)
-    }
 
     func findTypeDay(selection: Int){
-        if(selection % 2 == 0){
-            if(redWeek){
-                redDay = false
-                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                    "12:00 - 12:35", "12:40 - 2:10"]
-                setTableView("B")
-            }
-            else{
-                redDay = true
-                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                    "12:00 - 12:35", "12:40 - 2:10", "2:15 - 3:45"]
-                setTableView("R")
-            }
+        if(redDay){
+            redDay = false
+            setTableView("B")
         }
         else{
-            if(redWeek){
-                redDay = true
-                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                    "12:00 - 12:35", "12:40 - 2:10", "2:15 - 3:45"]
-                setTableView("R")
-            }
-            else{
-                redDay = false
-                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
-                    "12:00 - 12:35", "12:40 - 2:10"]
-                setTableView("B")
-            }
+            redDay = true
+            setTableView("R")
         }
     }
 
     @IBAction func colorSelected(sender: AnyObject) {
-        if(redWeek == true){
-            redWeek = false
-            self.findTypeDay(self.segmentBarDays.selectedSegmentIndex+1)
+        if(redDay == true){
+            redDay = false
+            setTableView("B")
         }
         else{
-            redWeek = true
-            self.findTypeDay(self.segmentBarDays.selectedSegmentIndex+1)
+            redDay = true
+            setTableView("R")
         }
 
         switch sender.selectedSegmentIndex {
@@ -492,20 +393,12 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.periodLabel.textAlignment = .Left
         cell.userInteractionEnabled = false;
         
-        if(currTableView == dayOfWeek)
-        {
-            if(indexPath.row == currPeriod)
-            {
-                cell.showProgressBar()
-                cell.progressBar.setProgress(timeLeft(startMin, endMin: endMin), animated: true)
-            }
-            else
-            {
-                cell.hideProgressBar()
-            }
+
+        if(indexPath.row == currPeriod){
+            cell.showProgressBar()
+            cell.progressBar.setProgress(timeLeft(startMin, endMin: endMin), animated: true)
         }
-        else
-        {
+        else{
             cell.hideProgressBar()
         }
         
