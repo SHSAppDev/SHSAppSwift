@@ -50,7 +50,7 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var redWeek: Bool = true
     
     
-    override func viewDidLoad() {
+    override func viewDidAppear(animated: Bool) {
         super.viewDidLoad()
         
         tableView1.delegate = self
@@ -321,19 +321,29 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func findTypeDay(selection: Int){
         if(selection % 2 == 0){
             if(redWeek){
+                redDay = false
+                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
+                    "12:00 - 12:35", "12:40 - 2:10"]
                 setTableView("B")
             }
             else{
+                redDay = true
+                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
+                    "12:00 - 12:35", "12:40 - 2:10", "2:15 - 3:45"]
                 setTableView("R")
             }
         }
         else{
             if(redWeek){
-                print("red")
+                redDay = true
+                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
+                    "12:00 - 12:35", "12:40 - 2:10", "2:15 - 3:45"]
                 setTableView("R")
             }
             else{
-                print("blue")
+                redDay = false
+                actualTimes = ["8:15 - 9:45", "9:45 - 10:20", "10:25 - 12:00",
+                    "12:00 - 12:35", "12:40 - 2:10"]
                 setTableView("B")
             }
         }
@@ -342,12 +352,9 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func colorSelected(sender: AnyObject) {
         if(redWeek == true){
             redWeek = false
-            print("blue")
             self.findTypeDay(self.segmentBarDays.selectedSegmentIndex+1)
         }
         else{
-            print("red")
-            print(segmentBarRedOrBlue.selectedSegmentIndex)
             redWeek = true
             self.findTypeDay(self.segmentBarDays.selectedSegmentIndex+1)
         }
@@ -438,13 +445,15 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if(leftOfColonInt2 == 3){
             leftOfColonInt2 = 15
         }
-        
+        print("setminutes")
         if(day == "B"){
-            self.BlueHoursTotal.append(leftOfColonInt*60 + rightOfColonInt)
+            self.BlueMinutesTotal.append(leftOfColonInt*60 + rightOfColonInt)
             self.BlueMinutesTotal.append(leftOfColonInt2*60 + rightOfColonInt2)
         }
         else if(day == "R"){
-            self.RedHoursTotal.append(leftOfColonInt*60 + rightOfColonInt)
+            print(leftOfColonInt)
+            print(rightOfColonInt)
+            self.RedMinutesTotal.append(leftOfColonInt*60 + rightOfColonInt)
             self.RedMinutesTotal.append(leftOfColonInt2*60 + rightOfColonInt2)
         }
 

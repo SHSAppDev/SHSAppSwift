@@ -121,7 +121,7 @@
                                 </prototypes>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PhZ-ve-dzF">
-                                <rect key="frame" x="547" y="28" width="47" height="29"/>
+                                <rect key="frame" x="533" y="28" width="47" height="29"/>
                                 <segments>
                                     <segment title="R"/>
                                     <segment title="B"/>
@@ -145,10 +145,10 @@
                             <constraint firstItem="4Mz-cs-bxy" firstAttribute="trailing" secondItem="3fH-Hn-EIO" secondAttribute="trailing" id="JRg-h3-ivP"/>
                             <constraint firstItem="4Mz-cs-bxy" firstAttribute="top" secondItem="muF-4r-6Xo" secondAttribute="bottom" constant="8" symbolic="YES" id="KCR-8X-VNd"/>
                             <constraint firstItem="4Mz-cs-bxy" firstAttribute="trailing" secondItem="tOI-xb-R2Y" secondAttribute="trailing" id="OKJ-zz-nfr"/>
-                            <constraint firstItem="PhZ-ve-dzF" firstAttribute="leading" secondItem="3fH-Hn-EIO" secondAttribute="trailing" constant="-53" id="RHN-eS-gDV"/>
                             <constraint firstItem="tOI-xb-R2Y" firstAttribute="bottom" secondItem="KGR-rv-sem" secondAttribute="top" id="T6p-fn-8SF"/>
                             <constraint firstItem="4Mz-cs-bxy" firstAttribute="leading" secondItem="3fH-Hn-EIO" secondAttribute="leading" id="bIV-oH-0bL"/>
                             <constraint firstItem="3fH-Hn-EIO" firstAttribute="top" secondItem="cFJ-XL-fMd" secondAttribute="top" id="cwK-gv-BGi"/>
+                            <constraint firstItem="PhZ-ve-dzF" firstAttribute="leading" secondItem="3fH-Hn-EIO" secondAttribute="trailing" constant="-67" id="eyX-ZW-Nrb"/>
                             <constraint firstItem="H31-xE-UrD" firstAttribute="leading" secondItem="cFJ-XL-fMd" secondAttribute="leadingMargin" constant="4" id="hQ9-mT-ODB"/>
                             <constraint firstItem="4Mz-cs-bxy" firstAttribute="centerY" secondItem="H31-xE-UrD" secondAttribute="centerY" id="lzA-ab-bIH"/>
                             <constraint firstItem="tOI-xb-R2Y" firstAttribute="top" secondItem="H31-xE-UrD" secondAttribute="bottom" constant="12" id="nNp-DT-SgI"/>
