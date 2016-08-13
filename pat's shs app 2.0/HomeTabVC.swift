@@ -10,26 +10,10 @@ import Parse
 
 var internetConnection : Bool = true
 
-extension UIView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
-        return UINib(
-            nibName: nibNamed,
-            bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
-    }
-}
 
 
 
-@IBDesignable class aboutView : UIView
-{
-    @IBOutlet var view: aboutView!
-    
-    class func instanceFromNib() -> UIView {
-        return UINib(nibName: "aboutView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
-    }
-    
-}
+
 
 var loaded : Bool = false
 

@@ -8,6 +8,23 @@
 
 import UIKit
 
+extension UIView {
+    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+        return UINib(
+            nibName: nibNamed,
+            bundle: bundle
+            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+    }
+}
+@IBDesignable class aboutView : UIView
+{
+    @IBOutlet var view: aboutView!
+
+    class func instanceFromNib() -> UIView {
+        return UINib(nibName: "aboutView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
+    }
+
+}
 class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
@@ -45,8 +62,10 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var counter: Float = 0
 
     var redDay: Bool = true
+    var popup : KLCPopup!
 
-    
+
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidLoad()
         
@@ -93,6 +112,44 @@ class BellTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         timeBarLabel.textAlignment = .Center
         scheduledTimerWithTimeInterval()
+    }
+
+    @IBAction func gradesClicked(sender: AnyObject!)
+    {
+        let optionMenu = UIAlertController(title: nil, message: "Choose an Option For - Grades", preferredStyle: .ActionSheet)
+        let navianceAction = UIAlertAction(title: "Naviance", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            let webVC = SwiftWebVC(urlString: "http://www.naviance.com/")
+            self.navigationController?.pushViewController(webVC, animated: true)
+        })
+        let canvasAction = UIAlertAction(title: "Canvas", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            let webVC = SwiftWebVC(urlString: "https://lgsuhsd.instructure.com/")
+            self.navigationController?.pushViewController(webVC, animated: true)
+        })
+        let aeriesAction = UIAlertAction(title: "Aeries", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            let webVC = SwiftWebVC(urlString: "https://aeries.lgsuhsd.org/aeries.net/loginparent.aspx")
+            self.navigationController?.pushViewController(webVC, animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+
+
+        optionMenu.addAction(canvasAction)
+        optionMenu.addAction(aeriesAction)
+        optionMenu.addAction(navianceAction)
+        optionMenu.addAction(cancelAction)
+
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+
+    @IBAction func aboutClicked(sender: AnyObject) {
+        let view = aboutView.instanceFromNib()
+        popup = KLCPopup(contentView: view, showType: KLCPopupShowType.BounceIn, dismissType: KLCPopupDismissType.FadeOut, maskType: KLCPopupMaskType.Dimmed, dismissOnBackgroundTouch: true, dismissOnContentTouch: true)
+        popup.show()
     }
     
     func scheduledTimerWithTimeInterval(){

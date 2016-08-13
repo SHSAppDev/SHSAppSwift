@@ -102,15 +102,20 @@ class listViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        self.filteredStaff = self.staffMembers.filter ({ staff -> Bool in
+        /*self.filteredStaff = self.staffMembers.filter ({ staff -> Bool in
             return staff.name.lowercaseString.rangeOfString(searchText.lowercaseString) != nil
-        })
-        
-        self.filteredStaff = self.staffMembers.filter({ (text) -> Bool in
+        })*/
+        self.filteredStaff = self.staffMembers.filter { text in
+            let tmp : NSString = text.name
+            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            return range.location != NSNotFound
+            //return object.nickname.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        /*self.filteredStaff = self.staffMembers.filter({ (text) -> Bool in
             let tempString:  NSString = text.name
             let range = tempString.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
             return range.location != NSNotFound
-        })
+        })*/
         
         self.listView.reloadData()
     }
